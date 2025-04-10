@@ -23,10 +23,10 @@ tts = TextToSpeech(
 
 # Lista med meningar att generera
 sentences = [
-    "Together, we will make Sulfuras strong again.",
-    "We will make Sulfuras wealthy again.",
-    "We will make Sulfuras proud again.",
-    "God bless Sulfuras"
+    "Together, we will make Bastjanster strong again.",
+    "We will make Bastjanster wealthy again.",
+    "We will make Bastjanster proud again.",
+    "God bless Bastjanster."
 ]
 
 voice_name = "trump"
@@ -75,27 +75,24 @@ print("\nKombinerar alla ljudfiler...")
 combined_wav = None
 sample_rate = None
 
-for i, wav_file in enumerate(wav_files):
+for wav_file in wav_files:
     wav, sr = torchaudio.load(wav_file)
     if combined_wav is None:
         combined_wav = wav
         sample_rate = sr
     else:
-        # Lägg till en kort paus mellan meningarna (0.1 sekunder)
-        if i > 0:
-            silence = torch.zeros((1, int(sr * 0.1)))  # 0.1 sekunder av tystnad
-            combined_wav = torch.cat([combined_wav, silence, wav], dim=1)
-        else:
-            combined_wav = torch.cat([combined_wav, wav], dim=1)
+        # Lägg till en kort paus mellan meningarna (0.05 sekunder)
+        silence = torch.zeros((1, int(sr * 0.05)))  # 0.05 sekunder av tystnad
+        combined_wav = torch.cat([combined_wav, silence, wav], dim=1)
+    # Ta bort delfilen direkt efter att den har kombinerats
+    os.remove(wav_file)
+    print(f"Raderade: {os.path.basename(wav_file)}")
 
-# Skapa filnamn för den kombinerade filen
-timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+# Spara den kombinerade ljudfilen
 combined_filename = f"{timestamp}_{voice_name}_combined_full_speech.wav"
 combined_output_path = os.path.join(output_dir, combined_filename)
-
-# Spara den kombinerade filen
-print(f"\nSparar kombinerad ljudfil som: {combined_filename}")
 torchaudio.save(combined_output_path, combined_wav, sample_rate)
+print(f"\nSparar kombinerad ljudfil som: {combined_filename}")
 
-print(f"\nMax längd per fil är 30 sekunder (600 mel tokens)")
-print(f"Totalt antal tecken per fil bör inte överstiga cirka 100-150 tecken för bästa resultat") 
+print("\nMax längd per fil är 30 sekunder (600 mel tokens)")
+print("Totalt antal tecken per fil bör inte överstiga cirka 100-150 tecken för bästa resultat") 
