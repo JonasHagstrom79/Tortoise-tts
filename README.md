@@ -71,6 +71,7 @@ Tortoise-TTS/
 - Recommended character count per file is 100-150 characters
 - Longer texts are automatically split into sentences
 
+<<<<<<< HEAD
 ## 🔒 Private Repo
 
 This is a private repository. Contact the owner for access.
@@ -78,3 +79,9 @@ This is a private repository. Contact the owner for access.
 ## 📄 License
 
 This project is based on Tortoise-TTS and follows its license terms.
+=======
+## 📄 License
+
+This project is based on Tortoise-TTS and follows its license terms.
+# Tortoise-tts
+>>>>>>> 1243f1413431f514d95f429d851bf4a9ae9a96ca
